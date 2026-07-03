@@ -21,7 +21,7 @@ Cross-project analysis identified that work tracking at the repo level creates s
 
 ## What We Know
 
-- Repo-scoped tracking creates silos (proven across ThreeDoors, axiathon, poller-orc)
+- Repo-scoped tracking creates silos (proven across ThreeDoors and peer projects)
 - External systems (Jira, GH Issues) provide the locking/notification that markdown lacks
 - The namespace-scoped issuing authority pattern is sound in theory (analogous to ThreeDoors' SourceRef canonical ID mapping)
 - The coordination complexity scales with the number of repos and agents
