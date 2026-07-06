@@ -101,7 +101,7 @@ Screenshots and GIFs will be stored in [`docs/assets/`](docs/assets/).
 brew install arcavenae/tap/threedoors
 ```
 
-**Alpha channel** — latest development builds from `main`:
+**Alpha channel** — latest development builds from `develop`:
 
 ```bash
 brew install arcavenae/tap/threedoors-a
@@ -109,7 +109,37 @@ brew install arcavenae/tap/threedoors-a
 
 Both can be installed side-by-side. Stable runs as `threedoors`, alpha as `threedoors-a`.
 
-### Option 2: macOS Installer (.pkg)
+### Option 2: Install with mise
+
+[mise](https://mise.jdx.dev/) is a polyglot version manager. It reads a per-project `mise.toml`, pulls the exact signed binary from GitHub Releases, and verifies GitHub Artifact Attestations natively — no Homebrew tap required.
+
+**Stable:**
+
+```bash
+mise use github:ArcavenAE/ThreeDoors@latest
+threedoors --version
+```
+
+**Alpha channel** (prereleases from `develop`) — add `prerelease = true` to opt in per-tool. Alpha binaries install as `threedoors-a`, mirroring the Homebrew formula, so stable and alpha can coexist:
+
+```toml
+# mise.toml
+[tools]
+"github:ArcavenAE/ThreeDoors" = { version = "latest", prerelease = true }
+```
+
+```bash
+mise install
+threedoors-a --version
+```
+
+**macOS troubleshooting** — mise downloads over HTTP libraries that do not set `com.apple.quarantine`, so notarized binaries launch without a Gatekeeper prompt in the common case. If a quarantine-aware host (some IDEs, launchers, or file-manager copies) propagates the xattr into the mise install, clear it once:
+
+```bash
+xattr -d com.apple.quarantine "$(mise which threedoors)"
+```
+
+### Option 3: macOS Installer (.pkg)
 
 Download the `.pkg` installer from [GitHub Releases](https://github.com/arcavenae/ThreeDoors/releases). Double-click to launch the standard macOS installer, which places `threedoors` in `/usr/local/bin/`.
 
@@ -121,7 +151,7 @@ The `.pkg` installer is **code-signed and Apple-notarized**.
 
 To uninstall: `sudo rm /usr/local/bin/threedoors`
 
-### Option 3: Download Pre-built Binary
+### Option 4: Download Pre-built Binary
 
 Download the latest release from [GitHub Releases](https://github.com/arcavenae/ThreeDoors/releases). Binaries are available for:
 
@@ -137,13 +167,13 @@ mv threedoors-darwin-arm64 /usr/local/bin/threedoors   # adjust for your platfor
 
 All macOS binaries are **code-signed and Apple-notarized**.
 
-### Option 4: Install with `go install`
+### Option 5: Install with `go install`
 
 ```bash
 go install github.com/arcavenae/ThreeDoors/cmd/threedoors@latest
 ```
 
-### Option 5: Build from Source
+### Option 6: Build from Source
 
 **Prerequisites:** Go 1.25.4+, Git, [just](https://github.com/casey/just) (optional)
 

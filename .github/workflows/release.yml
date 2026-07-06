@@ -274,3 +274,43 @@ jobs:
       - name: Cleanup keychain
         if: always()
         run: security delete-keychain build.keychain || true
+
+  attest:
+    name: Attest Release Provenance
+    needs: [goreleaser, sign-stable]
+    # Run after sign-stable (or when it's skipped because SIGNING_ENABLED != 'true')
+    # so attestations cover the FINAL bytes that ship — the post-notarization
+    # tar.gz files and generated .pkg installers — not the pre-sign goreleaser
+    # output.
+    if: |
+      !cancelled() &&
+      needs.goreleaser.result == 'success' &&
+      (needs.sign-stable.result == 'success' || needs.sign-stable.result == 'skipped')
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        with:
+          egress-policy: audit
+
+      - name: Download final release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p release-assets
+          # Pull everything currently attached to the release; sign-stable has
+          # already --clobber'd its updates by the time this job runs.
+          gh release download "${GITHUB_REF_NAME}" \
+            --repo "${{ github.repository }}" \
+            --dir release-assets
+          echo "Assets to be attested:"
+          ls -la release-assets/
+
+      - name: Attest release artifacts
+        uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
+        with:
+          subject-path: 'release-assets/*'
