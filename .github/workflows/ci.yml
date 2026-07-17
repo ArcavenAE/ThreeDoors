@@ -579,3 +579,52 @@ jobs:
             | awk '{print $1}' \
             | xargs -I{} gh release delete {} --yes --cleanup-tag
 
+  attest:
+    name: Attest Alpha Release Provenance
+    needs: [build-binaries, sign-and-notarize, release]
+    # Runs after release (the last asset mutation on the alpha channel)
+    # so attestations cover the FINAL bytes that ship. Tolerates a skipped
+    # sign-and-notarize (SIGNING_ENABLED != 'true').
+    if: |
+      !cancelled() &&
+      needs.build-binaries.result == 'success' &&
+      needs.release.result == 'success' &&
+      (needs.sign-and-notarize.result == 'success' || needs.sign-and-notarize.result == 'skipped')
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        with:
+          egress-policy: audit
+
+      - name: Download final release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p release-assets
+          gh release download "${{ needs.build-binaries.outputs.tag }}" \
+            --repo "${{ github.repository }}" \
+            --dir release-assets
+          echo "Assets to be attested:"
+          ls -la release-assets/
+
+      - name: Attest release artifacts
+        id: attest
+        uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
+        with:
+          subject-path: 'release-assets/*'
+
+      - name: Upload attestation bundle to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Publish the Sigstore bundle as a release asset so external
+          # scanners (e.g. OSSF Scorecard Signed-Releases) can see it; the
+          # GitHub attestation store is not visible to them.
+          cp "${{ steps.attest.outputs.bundle-path }}" attestations.sigstore.json
+          gh release upload "${{ needs.build-binaries.outputs.tag }}" attestations.sigstore.json \
+            --repo "${{ github.repository }}" --clobber
