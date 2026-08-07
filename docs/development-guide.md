@@ -4,7 +4,7 @@
 
 | Requirement | Version | Installation |
 |---|---|---|
-| Go | 1.25.4+ | `asdf install golang 1.25.4` or [golang.org](https://golang.org/doc/install) |
+| Go | 1.26.1+ | `asdf install golang 1.26.1` or [golang.org](https://golang.org/doc/install) |
 | Git | 2.40+ | System package manager |
 | just | Latest | `brew install just` or [just.systems](https://just.systems/) |
 | gofumpt | 0.7.0 | `go install mvdan.cc/gofumpt@latest` |
