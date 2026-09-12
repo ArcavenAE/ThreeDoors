@@ -195,11 +195,15 @@ func winterDoor(content string, width, height, inner int, hChar, vChar, tl, tr, 
 
 	// Frost texture row: dense dots between hinge borders
 	frostRow := func(bg lipgloss.TerminalColor) string {
-		pattern := strings.Repeat(dotChar+" ", inner/2)
+		// Fill the whole inner width, then cut on a rune boundary: the dot
+		// is two bytes, so a byte slice split it and left a stray 0xC2 in
+		// the row (and in the golden files that recorded it). Every rune
+		// here is one cell wide, so rune count is display width.
+		pattern := []rune(strings.Repeat(dotChar+" ", inner/2+1))
 		if len(pattern) > inner {
 			pattern = pattern[:inner]
 		}
-		return hlStyle.Render(hingeV) + bgFillContent(pattern, inner, 0, bg) + shStyle.Render(openV)
+		return hlStyle.Render(hingeV) + bgFillContent(string(pattern), inner, 0, bg) + shStyle.Render(openV)
 	}
 
 	// Row just below lintel gets frost
