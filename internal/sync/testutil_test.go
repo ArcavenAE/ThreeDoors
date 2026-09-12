@@ -16,6 +16,14 @@ func createBareRepo(t *testing.T) string {
 	if out, err := cmd.CombinedOutput(); err != nil {
 		t.Fatalf("git init --bare failed: %v\n%s", err, out)
 	}
+	// receive-pack runs `git gc --auto` after a push, and that gc detaches
+	// into the background. Under a push-heavy test it can still be
+	// writing to objects/ when t.TempDir removes the directory, which
+	// fails the test as "directory not empty". Nothing here needs gc.
+	cmd = exec.Command("git", "-C", bareDir, "config", "gc.auto", "0")
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("git config gc.auto failed: %v\n%s", err, out)
+	}
 	return bareDir
 }
 

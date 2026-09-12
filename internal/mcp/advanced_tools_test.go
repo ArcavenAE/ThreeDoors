@@ -16,7 +16,10 @@ func TestPrioritizeTasks(t *testing.T) {
 	pool := core.NewTaskPool()
 	pool.AddTask(&core.Task{ID: "t1", Text: "blocker task", Status: core.StatusTodo, Type: core.TypeTechnical, Effort: core.EffortQuickWin, CreatedAt: now.AddDate(0, 0, -10), UpdatedAt: now})
 	pool.AddTask(&core.Task{ID: "t2", Text: "blocked task", Status: core.StatusTodo, Type: core.TypeCreative, Effort: core.EffortDeepWork, CreatedAt: now, UpdatedAt: now, Blocker: "t1"})
-	pool.AddTask(&core.Task{ID: "t3", Text: "old task", Status: core.StatusTodo, Type: core.TypeAdministrative, Effort: core.EffortMedium, CreatedAt: now.AddDate(0, -1, 0), UpdatedAt: now})
+	// 20 days old, not a month: at 30 days the age factor saturates and t3
+	// ties t1 exactly (3.65 each), so the assertion below depended on map
+	// order. The blocking edge has to be what puts t1 first.
+	pool.AddTask(&core.Task{ID: "t3", Text: "old task", Status: core.StatusTodo, Type: core.TypeAdministrative, Effort: core.EffortMedium, CreatedAt: now.AddDate(0, 0, -20), UpdatedAt: now})
 
 	edges := []TaskEdge{
 		{FromID: "t1", ToID: "t2", Type: EdgeBlocks, Weight: 0.8, Source: "inferred:text"},
