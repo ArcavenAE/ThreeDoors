@@ -228,8 +228,13 @@ func prioritizeTasks(pool *core.TaskPool, edges []TaskEdge, limit int, mood, tim
 		})
 	}
 
+	// Equal scores are common (the factors are coarse), and the pool is a
+	// map, so break ties on ID to keep the order stable across calls.
 	sort.Slice(suggestions, func(i, j int) bool {
-		return suggestions[i].Score > suggestions[j].Score
+		if suggestions[i].Score != suggestions[j].Score {
+			return suggestions[i].Score > suggestions[j].Score
+		}
+		return suggestions[i].TaskID < suggestions[j].TaskID
 	})
 
 	if limit <= 0 {
