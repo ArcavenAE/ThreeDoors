@@ -15,10 +15,10 @@ require (
 	github.com/fsnotify/fsnotify v1.10.1
 	github.com/google/go-github/v68 v68.0.0
 	github.com/google/uuid v1.6.0
-	github.com/lucasb-eyer/go-colorful v1.4.0
-	github.com/mattn/go-isatty v0.0.22
+	github.com/lucasb-eyer/go-colorful v1.4.1
+	github.com/mattn/go-isatty v0.0.24
 	github.com/muesli/termenv v0.16.0
-	github.com/oklog/ulid/v2 v2.1.1
+	github.com/oklog/ulid/v2 v2.1.2
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/oauth2 v0.36.0
 	golang.org/x/term v0.40.0
