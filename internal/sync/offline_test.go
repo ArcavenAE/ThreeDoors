@@ -101,14 +101,19 @@ func TestOfflineManager_IsOnline(t *testing.T) {
 func TestOfflineManager_ConnectivityState(t *testing.T) {
 	t.Parallel()
 
+	// probe is the breaker's probe interval. Only the half-open case wants it short, so
+	// the interval can elapse. For open and closed it is long: a short one lets a
+	// scheduler stall of over a millisecond move an open breaker to half-open before
+	// ConnectivityState reads it, and the case flakes to "probing".
 	tests := []struct {
 		name    string
 		cbState core.CircuitState
+		probe   time.Duration
 		want    string
 	}{
-		{"closed is online", core.CircuitClosed, "online"},
-		{"open is offline", core.CircuitOpen, "offline"},
-		{"half-open is probing", core.CircuitHalfOpen, "probing"},
+		{"closed is online", core.CircuitClosed, time.Minute, "online"},
+		{"open is offline", core.CircuitOpen, time.Minute, "offline"},
+		{"half-open is probing", core.CircuitHalfOpen, time.Millisecond, "probing"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -116,7 +121,7 @@ func TestOfflineManager_ConnectivityState(t *testing.T) {
 			cb := core.NewCircuitBreaker(core.CircuitBreakerConfig{
 				FailureThreshold: 1,
 				FailureWindow:    time.Minute,
-				ProbeInterval:    time.Millisecond,
+				ProbeInterval:    tt.probe,
 				MaxProbeInterval: time.Minute,
 			})
 			switch tt.cbState {
