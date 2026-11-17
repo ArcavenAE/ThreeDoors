@@ -7,6 +7,16 @@ content: |
   starts as multiclaude replacement/fork, evolves into standalone
   agent orchestration platform. BLOCKER: licensing status of
   dlorenc/multiclaude (R-013) must be resolved before redistribution.
+
+  Harvest 2026-11-17 (I-532): the extraction is decided in docs/decisions/BOARD.md
+  row D-086 (line 183), 2026-03-29, "Platform extraction: multiclaude
+  customizations to standalone reusable platform", and marvel now exists as its
+  own repository (aae-orc repos.yaml, line 264). The licensing blocker shows no
+  resolution at this commit: R-013 (BOARD.md line 62) is a completed research
+  row that recommends requesting a LICENSE file from dlorenc or proceeding with
+  the fork, and P-014 (line 87) still lists that formalization as needed. This
+  node is about marvel, so by the orc subject test it may belong in marvel's
+  graph; that is not decided here. No confidence change.
 edges:
   - target: board-r-013
     type: derives

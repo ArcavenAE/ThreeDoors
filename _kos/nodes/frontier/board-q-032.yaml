@@ -9,6 +9,14 @@ content: |
   effort is spent on code that will soon be replaced or restructured.
   Skip saves effort on a soon-replaced system; rename now reduces
   confusion during the extraction itself.
+
+  Harvest 2026-11-17 (I-532): overtaken. director is now its own repository,
+  "Repo created 2026-09-10 (public)" (aae-orc repos.yaml, line 240), and the orc
+  relocations index records that director became a git repo (relocations.md,
+  line 131), so the rename inside multiclaude that this question weighs is not
+  the path taken. Moving this node to the graveyard is a separate proposal. This
+  node's subject is director, so it may belong in director's graph. No
+  confidence change.
 edges: []
 provenance:
   created_by: human

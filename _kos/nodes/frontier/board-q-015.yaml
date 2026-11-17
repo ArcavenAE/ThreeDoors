@@ -8,6 +8,14 @@ content: |
   submodule init after worktree creation could pull unwanted content
   or fail on repos where submodule URLs are inaccessible. Making it
   configurable adds complexity but respects repo-specific intent.
+
+  Harvest 2026-11-17 (I-532): answered in docs/decisions/BOARD.md, row D-085
+  (line 182): "Submodule init always-on with skip flag (Q-C-006)", 2026-03-29.
+  The bootstrap filed this as a question and has no node for the decision.
+  BOARD.md reuses D-085 for an unrelated decision at line 192, the duplicate-id
+  problem board-q-022 describes; the bootstrap may have dropped the first one for
+  that reason (inferred). Whether to move this node is a separate proposal. No
+  confidence change.
 edges: []
 provenance:
   created_by: human
