@@ -7,6 +7,12 @@ content: |
   lifecycle, can run without multiclaude. Integrated: simpler
   deployment, single process to manage, shared configuration.
   Affects how director is distributed, tested, and operated.
+
+  Harvest 2026-11-17 (I-532): revised, not settled. director is a separate
+  repository whose language is still undecided (aae-orc repos.yaml, line 244),
+  so "integrated into multiclaude" is no longer a live option. Whether director
+  ships a daemon binary stays open in director's own scope. No confidence
+  change.
 edges: []
 provenance:
   created_by: human

@@ -6,6 +6,13 @@ content: |
   Cross-project work tracking is deferred until a second active project
   exists. No point building multi-project infrastructure when there is
   only one project to track.
+
+  Harvest 2026-11-17 (I-532): part of ADR-0033's reasoning has changed. Its
+  first reason is "ThreeDoors is the only project without an -orc orchestrator",
+  and ThreeDoors is now a subrepo of an orchestrator (aae-orc CLAUDE.md, line 79).
+  The ADR's other re-entry gates (a live mutex, a defined human authority model)
+  are not shown to be met here, and the ADR still reads "Status: Deferred" with no
+  later ADR revisiting it. No confidence change.
 edges:
   - target: adr-0032
     type: derives
