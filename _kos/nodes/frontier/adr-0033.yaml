@@ -10,9 +10,14 @@ content: |
   Harvest 2026-11-17 (I-532): part of ADR-0033's reasoning has changed. Its
   first reason is "ThreeDoors is the only project without an -orc orchestrator",
   and ThreeDoors is now a subrepo of an orchestrator (aae-orc CLAUDE.md, line 79).
-  The ADR's other re-entry gates (a live mutex, a defined human authority model)
-  are not shown to be met here, and the ADR still reads "Status: Deferred" with no
-  later ADR revisiting it. No confidence change.
+  The ADR's Re-entry Gate (docs/ADRs/ADR-0033-project-level-tracking-deferred.md,
+  lines 29 to 34) lists three conditions: "A second project under orc becomes
+  actively developed with agents"; "The live mutex question (Decision 18's
+  "per-project tracking location") has a concrete answer"; and "The human
+  authority model for admitting changes is defined". The change above bears on
+  the first. This harvest does not judge whether any of the three is met; that is
+  the owner's call. The ADR still reads "Status: Deferred" and no later ADR
+  revisits it. No confidence change.
 edges:
   - target: adr-0032
     type: derives
