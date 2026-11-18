@@ -1,6 +1,6 @@
 id: board-q-032
 type: question
-confidence: frontier
+confidence: graveyard
 title: "Should multiclaude workspace→director rename happen before or after Marvel extraction?"
 content: |
   Trade-off: renaming now improves the mental model and aligns
@@ -14,10 +14,17 @@ content: |
   "Repo created 2026-09-10 (public)" (aae-orc repos.yaml, line 240), and the orc
   relocations index records that director became a git repo (relocations.md,
   line 131), so the rename inside multiclaude that this question weighs is not
-  the path taken. Moving this node to the graveyard is a separate proposal. This
-  node's subject is director, so it may belong in director's graph. No
-  confidence change.
+  the path taken.
+
+  GRAVEYARDED IN PLACE 2026-11-18 (I-532 harvest; operator ruling d1117b-1, option 1, 2026-11-17).
+  Reason: overtaken, as above. This node's subject is director, so it may belong
+  in director's graph; that is a relocation question and is not decided here.
+  The node keeps its id, so references still resolve.
 edges: []
+graveyard:
+  approach: "Open question: whether the multiclaude workspace to director rename happens before or after the Marvel extraction"
+  ruling: "Overtaken: director became its own repository (ArcavenAE/director, created 2026-09-10), not a rename inside multiclaude; the orc relocations index records it."
+  reopener: "A ruling that brings the rename inside multiclaude back as the path."
 provenance:
   created_by: human
   session: session-011
