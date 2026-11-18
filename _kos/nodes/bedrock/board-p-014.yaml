@@ -1,6 +1,6 @@
 id: board-p-014
 type: element
-confidence: frontier
+confidence: bedrock
 title: "Platform extraction — multiclaude customizations to standalone platform"
 content: |
   Extract into reusable platform NOT coupled to ThreeDoors. Vision:
@@ -16,7 +16,11 @@ content: |
   row that recommends requesting a LICENSE file from dlorenc or proceeding with
   the fork, and P-014 (line 87) still lists that formalization as needed. This
   node is about marvel, so by the orc subject test it may belong in marvel's
-  graph; that is not decided here. No confidence change.
+  graph; that is not decided here. Moved to bedrock 2026-11-18 (I-532
+  harvest; operator ruling d1117b-1, option 1, 2026-11-17) as the
+  extraction decision BOARD.md row D-086 records. The licensing blocker stays
+  open: nothing in the cited rows resolves R-013. The text above is left as
+  written.
 edges:
   - target: board-r-013
     type: derives

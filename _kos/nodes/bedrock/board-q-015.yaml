@@ -1,6 +1,6 @@
 id: board-q-015
 type: question
-confidence: frontier
+confidence: bedrock
 title: "Should multiclaude post-worktree submodule init be configurable or always-on?"
 content: |
   Some repos have intentionally uninitialized submodules (large deps,
@@ -14,8 +14,10 @@ content: |
   The bootstrap filed this as a question and has no node for the decision.
   BOARD.md reuses D-085 for an unrelated decision at line 192, the duplicate-id
   problem board-q-022 describes; the bootstrap may have dropped the first one for
-  that reason (inferred). Whether to move this node is a separate proposal. No
-  confidence change.
+  that reason (inferred). Moved to bedrock 2026-11-18 (I-532 harvest;
+  operator ruling d1117b-1, option 1, 2026-11-17),
+  as the decision BOARD.md row D-085 records. The question text above is left
+  as written.
 edges: []
 provenance:
   created_by: human
